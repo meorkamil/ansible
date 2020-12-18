@@ -1,0 +1,16 @@
+---
+- name: add repos 
+  hosts: all
+  tasks: 
+    - name: add epel repos
+      yum_repository:
+        name: epel
+        description: epel-release.7
+        baseurl: ...
+        gpgcheck: no
+    - name: delete repos
+      yum_repository:
+        name: epel
+        file: epel
+        state: absent
+        

@@ -1,0 +1,48 @@
+---
+- name: create ssh user
+  hosts: control
+  vars_files: users
+  vars:
+    passwd: "{{ 'devops' | password_hash('sha512','randomsalt') }}"
+  tasks: 
+    - name: create user with ssh
+      user: 
+        name: "{{ item.username }}"
+        group: "{{ item.group }}"
+        generate_ssh_key: true
+        ssh_key_comment: "{{ item.username }}@{{ ansible_fqdn }}" 
+        password: "{{ passwd }}"
+      loop: "{{ users }}"
+    - name: create dir
+      file:
+        path: "{{ item.username }}"
+        state: directory
+      loop: "{{ users }}"
+    - name: copy ssh generate_ssh_key
+      shell: 'cat /home/{{ item.username }}/.ssh/id_rsa.pub  > {{ item.username }}/id_rsa.pub'
+      loop: "{{ users }}"
+- name: duplicate to managed node
+  hosts: ansible1
+  vars_files: users
+  vars: "{{ 'devops' | password_hash('sha512','randomsalt') }}"
+  tasks:
+    - name: create remote user
+      user:
+        name: "{{ item.username }}"
+        password: "{{ passwd }}"
+        group: "{{ item.group }}"
+      loop: "{{ users }}"
+    - name: create sudo file
+      file:
+        path: /etc/sudoers.d/sudo
+        state: touch
+    - name: create sudo based on user
+      lineinfile:
+        path: /etc/sudoers.d/sudo
+        line: '{{ item.username }} ALL=(ALL) NOPASSWD:ALL'
+      loop: "{{ users }}"
+    - name: authorized_key
+      authorized_key:
+        user: "{{ item.username }}"
+        key: "{{ lookup('find', './'+ username +'/id_rsa.pub') }}"
+      loop: "{{ users }}"

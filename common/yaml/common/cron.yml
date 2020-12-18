@@ -1,0 +1,21 @@
+---
+- name: create cron job reboot at ever 2 am and logger and set default target
+  hosts: ansible2
+  tasks:
+    - name: create cron reboot at ever 2am weekday
+      cron:
+        name: "reboot"
+        job: "reboot"
+        state: present
+        hour: "2"
+        weekday: "1-5"
+    - name: logger
+      cron:
+        job: "logger CRON initiated the reboot completed"
+        special_time: reboot
+        name: "log reboot"
+    - name: set default target
+      file:
+        src: /usr/lib/systemd/system/multi-user.target
+        dest: /etc/systemd/system/default.target
+        state: link

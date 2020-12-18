@@ -1,0 +1,10 @@
+[master-node]
+master
+
+[worker-node]
+worker1
+worker2
+
+[kube-node:children]
+master-node
+worker-node

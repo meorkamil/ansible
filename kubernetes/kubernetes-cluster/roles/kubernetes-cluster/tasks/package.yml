@@ -1,0 +1,24 @@
+- name: Install all docker packages 
+  yum:
+    name: "{{ item.name }}"
+    state: "{{ item.state }}"
+  loop: "{{ docker_package }}"
+
+- name: start docker service  
+  service:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: Install all Kubernetes packages
+  yum:
+    name: "{{ item.name }}"
+    state: "{{ item.state }}"
+    disable_excludes: kubernetes
+  loop: "{{ kube_package }}"
+
+- name: Start kubelet
+  service:
+    name: kubelet
+    state: started
+    enabled: yes

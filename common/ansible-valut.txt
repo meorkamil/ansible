@@ -1,0 +1,17 @@
+ansible-vault create secrets.yml
+
+add the secrets.yml as variable in ansible
+
+ansible-playbook --ask-vault-pass secrets.yml
+
+# to reset the vault password
+ansible-vault rekey sercrets.yml
+
+# to create auto password,
+# create a file with the password inside called vault-pass
+# chmod to 400
+# run playbook with --vault-password-file=
+
+echo secretpassword > vault-pass
+chmod 400 valut-pass
+ansible-playbook --vault-password-file=vault-pass sercrets.yml

@@ -1,0 +1,4 @@
+- name: copy file
+  copy:
+    content: "welcome to this server"
+    dest: /tmp/README

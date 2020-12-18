@@ -1,0 +1,56 @@
+# when cofigure Selinux in minimul server make sure the server have install policycoreutils-devel
+# to allow the restorecon and semanage
+# yum install policycoreutils-devel
+---
+- name: setup httpd with custom directory
+  hosts: ansible1
+  tasks:
+    - name: install httpd
+      yum:
+        name: httpd 
+        state: latest
+    - name: start httpd
+      service:
+        name: httpd 
+        state: started
+        enabled: yes
+    - name: create file /web
+      file:
+        path: /web  
+        mode: 0777
+        state: directory
+    - name: create index.html
+      copy:
+        content: 'welcome to /web index.html'
+        dest: /web/index.html
+    - name: DocumentRoot "/web"
+      lineinfile:
+        path: /etc/httpd/conf/httpd.conf
+        regexp: '^DocumentRoot "/var/www/html"'
+        line: 'DocumentRoot "/web"'
+    - name: config /etc/httpd/conf/httpd.conf /var/www/html
+      lineinfile:
+        path: /etc/httpd/conf/httpd.conf
+        regexp: '^<Directory "/var/www/html">'
+        line: <Directory "/web">
+    - name: config /etc/httpd/conf/httpd.conf /var/www/html
+      lineinfile:
+        path: /etc/httpd/conf/httpd.conf
+        regexp: '^<Directory "/var/www">'
+        line: '<Directory "/web">'
+    - name: sefcontext
+      sefcontext:
+        target: '/web(/.*)?'
+        setype: httpd_sys_content_t
+        state: present
+    - name: restorecon
+      command: restorecon -vR /web
+    - name: seboolean
+      seboolean:
+        name: httpd_read_user_content
+        state: yes
+        persistent: yes
+    - name: restart httpd
+      service:
+        name: httpd
+        state: restarted

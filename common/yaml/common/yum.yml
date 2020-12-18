@@ -1,0 +1,26 @@
+---
+- name: managing packages using yum module
+  hosts: all
+  tasks:
+    - name: install a packages
+      yum:
+        name: httpd
+        state: latest
+    - name: install a list of packages
+      yum:
+        name: 
+          - httpd
+          - vsftpd
+        state: latest
+    - name: install rpm from a remote repo
+      yum:
+        name: http://website.com/path/to/rpm
+        state: present
+    - name: install rpm from a local file
+      yum:
+        name: /path/to/rpm 
+        state: present
+    - name: remove a packages
+      yum:
+        name: httpd
+        state: absent

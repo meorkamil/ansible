@@ -1,0 +1,12 @@
+---
+- name: create a partition using parted
+  hosts: ansible1
+  tasks:
+    - name: create 1 partition
+      parted:
+        device: /dev/sdb1
+        number: 1
+        flags: [ lvm ]
+        part_end: 1GiB|MiB
+        label: msdos|gpt
+        state: present|absent|info

@@ -1,0 +1,15 @@
+- name: install ftp
+  yum: 
+    name: "{{ packagename }}"
+    state: latest
+- name: start service
+  service:
+    name: "{{ servicename }}"
+    state: started
+    enabled: yes
+- name: enabled firewalld ftp service
+  firewalld:
+    service: "{{ firewald_servicename }}"
+    immediate: yes
+    permanent: yes
+    state: enabled

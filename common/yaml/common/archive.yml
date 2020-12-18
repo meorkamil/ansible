@@ -1,0 +1,24 @@
+---
+- name: archive a dir and file using archive
+  hosts: all
+  tasks:
+    - name: archive a file with exlude file
+      archive:
+        path: 
+          - /archive/testFile1
+          - /archive/testFile2
+        exclude_path:
+          - /archive/anotherDir
+        dest: /home/ansible/archive1.tgz
+        format: gz
+    - name: archive with wildcard
+      archive:
+        path: 
+          - /archive/testFile*
+        exclude_path: 
+          - /archive/testFile4
+        format: tar
+        dest: /home/archive/archive2.tar
+
+# file nk archive mesti ade = path pun mesti ade
+

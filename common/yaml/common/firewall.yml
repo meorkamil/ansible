@@ -1,0 +1,29 @@
+---
+- name: firewall configuration
+  hosts: all
+  tasks:
+    - name: add firewall service using loop
+      firewalld:
+        zone: public
+        service: "{{ item }}"
+        permanent: yes
+        immediate: yes
+        state: enabled
+      loop:
+        - http
+        - https
+    - name: add firewall port
+      firewalld:
+        zone: public
+        port: 8080/tcp | 170-179/udp
+        permanent: yes
+        immediate: yes
+        state: enabled
+    - name: add firewall rich rules
+      firewalld:
+        zone: public
+        rich_rule: rule family=ipv4 forward-port port=443 protocol=tcp to-port=8443
+        permanent: yes
+        state: enabled
+        immediate: yes
+

@@ -1,0 +1,11 @@
+---
+- name: manage services 
+  hosts: all
+  tasks:
+    - name: start httpd
+      service:
+        name: httpd
+        state: started
+        enabled: yes
+        daemon_reload: yes
+        force: yes

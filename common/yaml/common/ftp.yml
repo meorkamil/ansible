@@ -1,0 +1,54 @@
+# when cofigure Selinux in minimul server make sure the server have install policycoreutils-devel
+# to allow the restorecon and semanage
+# yum install policycoreutils-devel
+---
+- name: setup ftp, firewall, selinux, seboolean, chmod
+  hosts: file 
+  tasks:
+    - name: install vsftpd
+      yum:
+        name: vsftpd
+        state: latest
+    - name: start vsftpd
+      service:
+        name: vsftpd  
+        state: started
+        enabled: yes
+    - name: install selinux
+      yum:
+        name: policycoreutils-devel
+        state: present
+    - name: chmod /var/ftp/pub
+      file:
+        path: /var/ftp/pub
+        mode: 0777
+        state: directory
+    - name: config /etc/vsftpd/vsftpd.conf
+      replace:
+        path: /etc/vsftpd/vsftpd.conf
+        regexp: '^#anonymous_enable'
+        replace: 'anonymous_enable=YES'
+        backup: yes
+    - name: set sefcontext
+      sefcontext:
+        target: '/var/ftp/pub(/.*)?'
+        setype: public_content_rw_t
+        state: present
+    - name: restore con
+      command: restorecon -vR /var/ftp/pub 
+    - name: setsebool
+      seboolean:
+        name: ftpd_anon_write
+        state: yes 
+        presistent: yes 
+    - name: firewall port 20-21/tcp
+      firewalld:
+        zone: public 
+        persistent: yes
+        immediate: yes
+        port: 20-21/tcp
+    - name: restart vsftpd
+      service: 
+        name: vsftpd
+        state: restarted
+        enabled: yes

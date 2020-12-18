@@ -1,0 +1,7 @@
+---
+# Under development
+- name: Kubernetes Initialization
+  hosts: kube-node #including master node
+  roles:
+    - role: kubernetes-cluster-init
+      user: kubeadmin # default user is kubeadmin

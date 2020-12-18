@@ -1,0 +1,11 @@
+---
+- name: unarchive using module unarchive
+  host: ansible1
+  tasks:
+    - name: show option for unarchive module
+      unarchive:
+        src: /path/to/file.zip | www.website.com/path/to/file.zip
+        dest: /path/to/unpack
+        remote_src: no | yes
+
+# file nk unarchive mesti ade = path pun mesti ade

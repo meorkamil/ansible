@@ -1,0 +1,15 @@
+---
+- name: install packages using when with fact
+  hosts: all
+  tasks:
+    - name: install httpd
+      yum:
+        name: httpd 
+        state: latest
+      when: ansible_hostname == "ansible1"
+    - name: install vim
+      yum:
+        name: vim
+        state: latest
+      when: ansible_hostname == "ansible2"
+      

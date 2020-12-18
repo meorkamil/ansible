@@ -1,0 +1,16 @@
+---
+- name: create user with loop different password sha256
+  hosts: all
+  vars_files: user_pass.yml
+  tasks:
+    - name: create group
+      group:
+        name: "{{ item.department }}"
+        state: present
+      loop: "{{ users }}"
+    - name: create user
+      user:
+        name: "{{ item.name }}"
+        password: "{{ item.password | password_hash('sha512', 'ramdomsalt') }}"
+        group: "{{ item.department }}"
+      loop: "{{ users }}"

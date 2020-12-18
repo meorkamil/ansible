@@ -1,0 +1,19 @@
+---
+- name: manage file content
+  hosts: all
+  tasks:
+    - name: add line using lineinfile module
+      lineinfile:
+        path: /tmp/testFile3
+        line: add by lineinfile module  
+        create: yes
+    - name: replace line in testFile2
+      lineinfile:
+        path: /tmp/testFile2
+        regexp: "^added.*$"
+        line: "line replaced by linefile module"
+    - name: replace line in testFile3
+      replace:
+        path: /tmp/testFile3
+        regexp: ".*module$"
+        replace: "line replaced by replace module"

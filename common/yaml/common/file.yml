@@ -1,0 +1,23 @@
+---
+- name: manage file
+  hosts: all
+  tasks: 
+    - name: copy file from local to remote
+      copy:
+        src: /tmp/testFile1
+        dest: /tmp/testFile1
+        mode: 0644
+        owner: ansible
+        group: ansible
+    - name: copy file from remote to remote
+      copy:
+        remote_src: 192.168.0.1:/tmp/testFile1
+        remote_dest: 192.168.0.1:/tmp/testFile1
+    - name: create a file
+      file:
+        path: /home/ansible/file1.txt
+        state: touch
+        mode: 0644
+        group: ansible
+        owner: ansible
+

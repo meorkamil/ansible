@@ -1,0 +1,26 @@
+---
+- name: crate user with ssh
+  hosts: localhost
+  tasks:
+    - name: create local user
+      user:
+        name: "{{ username }}"
+        generate_ssh_key: true
+        ssh_key_comment: "{{ username }}@{{ ansible_fqdn }}"
+    - name: create directory to store the generate_ssh_key
+      file: "{{ username }}"
+      state: directory
+    - name: copy the local user ssh key to temporary {{ username }} key
+      shell: 'cat /home/{{ username }}/.ssh/.id_rsa.pub > {{ username }}/id_rsa_pub'
+    - name: varify that file exists
+      command: ls -l {{ username }}/
+- name: setup remote hosts
+  hosts: ansible1
+  tasks:
+    - name: create remote user, no need for ssh key
+      user: 
+        name: "{{ username }}"
+    - name: user authorized_key to set the password
+      authorized_key:
+        user: "{{ username }}"
+        key: "{{ lookup('file', './' + username +'/id_rsa.pub') }}"

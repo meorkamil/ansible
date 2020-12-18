@@ -1,0 +1,19 @@
+---
+- name: manage lvm 
+  hosts: ansible1
+  tasks:
+    - name: create a pvg
+      lvg:
+        pvs: /dev/sdb1
+        vg: vgdata
+        state: present|absent
+    - name: create logical volume
+      lvol:
+        vg: vgdata
+        lv: lvdata
+        size: 100m|g|100&FREE
+        state: present|absent
+        shrink: no|yes
+        resizefs: no|yes
+        force: no|yes
+        opts: free from option passed to the lvcreate command

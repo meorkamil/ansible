@@ -1,0 +1,10 @@
+users:
+  - name: linda
+    department: sales
+    password: password
+  - name: bob
+    department: account
+    password: geheim
+  - name: lucy
+    department: sales
+    password: 1234

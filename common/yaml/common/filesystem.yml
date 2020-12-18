@@ -1,0 +1,11 @@
+---
+- name: create a filesystem
+  hosts: ansible1
+  tasks:
+    - name: create a filesystem lvdata
+      filesystem:
+        fstype: xfs
+        dev: /dev/mapper/vgdata-lvdata
+        force: no|yes
+        resizefs: no|yes
+        opts: options to passwd mkfs command

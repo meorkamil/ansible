@@ -1,0 +1,11 @@
+---
+- name: mount the filesystem to lvdata
+  hosts:  ansible1
+  tasks:
+    mount:
+      path: /lvdata
+      src:  /dev/mapper/vgdata-lvdata
+      fstype: xfs
+      stated: mounted|absent|present|unmounted
+      opts: mount options
+      backup: no|yes  

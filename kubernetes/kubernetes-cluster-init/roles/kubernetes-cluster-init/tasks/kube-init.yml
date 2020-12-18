@@ -1,0 +1,23 @@
+- name: get the username running the deploy
+  become: false
+  local_action: command whoami
+  register: user_on_host
+
+- name: Kebeadm init
+  command: kubeadm init
+
+- name: print init command
+  command: kubeadm token create --print-join-command
+  register: kubernetes_join_command
+
+- name: create token 
+  template:
+    src: templates/token.j2
+    dest: /home/{{ user }}/token
+
+- name: fetch token
+  fetch:
+    src: /home/{{ user }}/token
+    dest: /home/{{ user_on_host }}/token.sh
+    flat: yes
+

@@ -1,0 +1,10 @@
+---
+- name: paybook master with vars,ftp,copy
+  hosts: ansible1
+  vars_files: vars.yml
+  tasks:
+  - name: import ftp
+    import_tasks: ftp.yml
+  - name: import task copy
+    import_tasks: copy.yml
+  
