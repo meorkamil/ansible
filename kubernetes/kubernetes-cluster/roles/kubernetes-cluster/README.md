@@ -3,12 +3,43 @@ Example Playbook
 
 Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
 
+playbook.yml
+
     - name: Kubernetes Cluster Installation
       hosts: kube-node #including master node
       roles:
         - role: kubernetes-cluster
           user: kubeadmin # default user is kubeadmin
 
+ansible.cfg:
+
+  ```  
+    [defaults]
+    remote_user=sysadmin
+    host_key_checking=false
+    inventory=inventory
+
+    [privilege_escalation]
+    become=true
+    become_method=sudo
+    become_user=root
+    become_ask_pass=false
+  ```
+
+inventory:
+
+  ```  
+    [master-node]
+    master
+
+    [worker-node]
+    worker1
+    worker2
+
+    [kube-node:children]
+    master-node
+    worker-node
+  ```
 Author Information
 ------------------
 
