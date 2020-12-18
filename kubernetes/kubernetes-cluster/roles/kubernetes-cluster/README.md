@@ -1,5 +1,8 @@
-Configuration
-----------------
+# Role Name
+
+kubernetes-cluster
+
+## Configuration
 
 Below are the example for running this ansible role
 
@@ -41,8 +44,7 @@ inventory:
     [kube-node:children]
     master-node
     worker-node
-  ```
-Author Information
-------------------
+ ```
+## Author Information
 
 MK (Meor Muhammad Kamil).

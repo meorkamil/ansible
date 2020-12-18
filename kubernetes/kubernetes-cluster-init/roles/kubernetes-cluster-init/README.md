@@ -1,25 +1,22 @@
-Role Name
-=========
+# Role Names
 
 kubernetes-cluster-init
 
 This roles is only for master and node initizalization only. It work only in CentOS 8
 
-Configuration
-----------------
+## Configuration
 
 Below are the example to run this ansible role:
 
 playbook.yml
 
   ```  
-    ---
     - name: Kubernetes Initialization
       hosts: kube-node #including master node
       roles:
         - role: kubernetes-cluster-init
           user: kubeadmin # default user is kubeadmin
-    ```
+```
 
 ansible.cfg:
 
@@ -51,7 +48,6 @@ inventory:
     worker-node
   ```
 
-Author Information
-------------------
+## Author Information
 
 MK (Meor Muhammad Kamil).
