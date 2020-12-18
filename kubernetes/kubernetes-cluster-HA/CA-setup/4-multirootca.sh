@@ -1,0 +1,5 @@
+VERSION=$(curl --silent "https://api.github.com/repos/cloudflare/cfssl/releases/latest" | grep '"tag_name"' | sed -E 's/.*"([^"]+)".*/\1/')
+VNUMBER=${VERSION#"v"}
+wget https://github.com/cloudflare/cfssl/releases/download/${VERSION}/multirootca_${VNUMBER}_linux_amd64 -O multirootca
+chmod +x multirootca
+mv multirootca /usr/local/bin
