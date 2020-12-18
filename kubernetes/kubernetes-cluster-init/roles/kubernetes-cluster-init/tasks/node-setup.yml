@@ -1,11 +1,10 @@
-- name: get the username running the deploy
-  become: false
-  local_action: command whoami
-  register: user_on_host
+- name: debug
+  debug:
+    msg: "{{ user_on_host.stdout }}"
 
 - name: Copy token file 
   copy:
-    src: /home/{{ user_on_host }}/token.sh
+    src: /home/{{ user_on_host.stdout }}/token.sh
     dest: /home/{{ user }}/token.sh
     mode: 777
 

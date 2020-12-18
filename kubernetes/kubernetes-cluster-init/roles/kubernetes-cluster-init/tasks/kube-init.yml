@@ -1,8 +1,3 @@
-- name: get the username running the deploy
-  become: false
-  local_action: command whoami
-  register: user_on_host
-
 - name: Kebeadm init
   command: kubeadm init
 
@@ -18,6 +13,6 @@
 - name: fetch token
   fetch:
     src: /home/{{ user }}/token
-    dest: /home/{{ user_on_host }}/token.sh
+    dest: /home/{{ user_on_host.stdout }}/token.sh
     flat: yes
 
