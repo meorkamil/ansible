@@ -1,7 +1,3 @@
-- name: debug
-  debug:
-    msg: "{{ user_on_host.stdout }}"
-
 - name: Copy token file 
   copy:
     src: /home/{{ user_on_host.stdout }}/token.sh
