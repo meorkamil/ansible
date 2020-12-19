@@ -5,11 +5,14 @@ wget -q --show-progress --https-only --timestamping \
   "https://github.com/coreos/etcd/releases/download/v3.3.9/etcd-v3.3.9-linux-amd64.tar.gz"
 
 ETCD_VER=v3.4.14
+GOOGLE_URL=https://storage.googleapis.com/etcd
+GITHUB_URL=https://github.com/etcd-io/etcd/releases/download
+DOWNLOAD_URL=${GOOGLE_URL}
 curl -L ${DOWNLOAD_URL}/${ETCD_VER}/etcd-${ETCD_VER}-linux-amd64.tar.gz -o ~/etcd-${ETCD_VER}-linux-amd64.tar.gz
 
 
-tar -xvf etcd-${ETCD_VER}-linux-amd64.tar.gz
-  sudo mv etcd-${ETCD_VER}-linux-amd64/etcd* /usr/local/bin/
+tar -xvf etcd-v3.4.14-linux-amd64.tar.gz
+  sudo mv etcd-v3.4.14-linux-amd64/etcd* /usr/local/bin/
 
   sudo mkdir -p /etc/etcd /var/lib/etcd
   sudo cp ca.crt etcd-server.key etcd-server.crt /etc/etcd/
@@ -33,12 +36,12 @@ ExecStart=/usr/local/bin/etcd \\
   --peer-trusted-ca-file=/etc/etcd/ca.crt \\
   --peer-client-cert-auth \\
   --client-cert-auth \\
-  --initial-advertise-peer-urls https://${INTERNAL_IP}:2380 \\
-  --listen-peer-urls https://${INTERNAL_IP}:2380 \\
-  --listen-client-urls https://${INTERNAL_IP}:2379,https://127.0.0.1:2379 \\
-  --advertise-client-urls https://${INTERNAL_IP}:2379 \\
+  --initial-advertise-peer-urls https://192.168.128.53:2380 \\
+  --listen-peer-urls https://192.168.128.53:2380 \\
+  --listen-client-urls https://192.168.128.53:2379,https://127.0.0.1:2379 \\
+  --advertise-client-urls https://192.168.128.53:2379 \\
   --initial-cluster-token etcd-cluster-0 \\
-  --initial-cluster master-1=https://192.168.5.50:2380,master-2=https://192.168.5.53:2380 \\
+  --initial-cluster master-1=https://192.168.128.50:2380,master-2=https://192.168.128.53:2380 \\
   --initial-cluster-state new \\
   --data-dir=/var/lib/etcd
 Restart=on-failure
