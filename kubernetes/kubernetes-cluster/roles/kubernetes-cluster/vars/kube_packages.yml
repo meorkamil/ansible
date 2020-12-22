@@ -5,5 +5,3 @@ kube_package:
     state: present
   - name: kubectl
     state: present
-  - name: containerd.io
-    state: latest
