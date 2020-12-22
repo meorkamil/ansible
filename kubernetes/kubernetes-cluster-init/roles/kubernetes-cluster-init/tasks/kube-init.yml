@@ -1,5 +1,5 @@
 - name: Kebeadm init
-  command: kubeadm init
+  command: kubeadm init --apiserver-advertise-address={{ ansible_default_ipv4.address }} --pod-network-cidr={{ pod_cidr }}
 
 - name: print init command
   command: kubeadm token create --print-join-command
