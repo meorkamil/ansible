@@ -1,14 +1,20 @@
-- name: Install all docker packages 
-  yum:
-    name: "{{ item.name }}"
-    state: "{{ item.state }}"
-  loop: "{{ docker_package }}"
+# - name: Install all docker packages 
+#   yum:
+#     name: "{{ item.name }}"
+#     state: "{{ item.state }}"
+#   loop: "{{ docker_package }}"
 
-- name: start docker service  
-  service:
-    name: docker
-    state: started
-    enabled: yes
+# - name: start docker service  
+#   service:
+#     name: docker
+#     state: started
+#     enabled: yes
+
+# - name: Install Conatinerd
+#   dnf:
+#     name: containerd.io
+#     state: latest
+#     allowerasing: yes
 
 - name: Install all Kubernetes packages
   yum:
@@ -17,8 +23,19 @@
     disable_excludes: kubernetes
   loop: "{{ kube_package }}"
 
-- name: Start kubelet
+- name: create containerd /etc/
+  file:
+    state: directory
+    path: /etc/containerd
+
+- name: Containerd setup
+  raw: containerd config default > /etc/containerd/config.toml
+
+- name: Start containerd and kubelet
   service:
-    name: kubelet
+    name: "{{ item }}"
     state: started
     enabled: yes
+  loop: 
+    - containerd
+    - kubelet
