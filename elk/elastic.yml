@@ -1,0 +1,5 @@
+---
+- name: Elastic 
+  hosts: elastic
+  roles:
+    - role: elastic
