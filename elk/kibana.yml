@@ -1,0 +1,5 @@
+---
+- name: setup kibana
+  hosts: elastic
+  roles:
+    - role: kibana
