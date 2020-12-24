@@ -8,18 +8,22 @@ Example Playbook
 
 Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
 
-    - name: Elastic 
+    ---
+    - name: setup kibana
       hosts: elastic
       roles:
-        - role: elastic
-          port_elastic: 9200 # default
-          port_elastic_firewall: 9200/tcp # default
-          hostname: "{{ ansible_hostname }}" # default
-          host_network: "{{ ansible_default_ipv4.address }}" # default
-          memory_java: -Xmx500m -Xms500m # default
+        - role: kibana
+          elastic_host: "{{ ansible_default_ipv4.address }}:9200" # default
+          kibana_host: localhost # default
+          kibana_port: 5601 # default
+          kibana_port_firewall: 5601/tcp # default
+
+
 
 
 Author Information
 ------------------
+MK (Meor Muhammad Kamil).
+
 
 
