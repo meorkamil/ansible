@@ -1,2 +1,5 @@
 ---
 # vars file for kibana
+packages:
+  - name: kibana
+    state: latest
