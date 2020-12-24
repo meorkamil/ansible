@@ -17,6 +17,17 @@
     state: "{{ item.state }}"
   loop: "{{ packages }}"
 
+- name: Backup elastic-config
+  copy:
+    src: /etc/elasticsearch/elasticsearch.yml
+    dest: ~/elasticsearch.yml
+    remote_src: yes
+
+- name: Add elasticsearch.yml
+  template:
+    src: templates/elastic-config.j2
+    dest: /etc/elasticsearch.yml
+
 - name: Allow firewalld
   firewalld:
     port: "{{ ports_elastic_firewall }}"
