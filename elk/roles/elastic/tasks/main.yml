@@ -3,6 +3,9 @@
 - name: Add variables
   include_vars: main.yml
 
+- name: Add elasticsearch key
+  raw: rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch
+  
 - name: Add repo
   template:
     src: templates/elastic-repo.j2
@@ -16,6 +19,7 @@
 
 - name: Start service
   service:
-    name:
+    name: "{{ item.name }}"
     state: started
     enabled: yes
+  loop: "{{ services }}"
