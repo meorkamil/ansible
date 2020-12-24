@@ -3,8 +3,8 @@
   hosts: elastic
   roles:
     - role: elastic
-      port_elastic: 9200
-      port_elastic_firewall: 9200/tcp
-      hostname: "{{ ansible_hostname }}"
-      host_network: "{{ ansible_default_ipv4.address }}"
-      memory_java: -Xmx500m -Xms500m
+      port_elastic: 9200 # default
+      port_elastic_firewall: 9200/tcp # default
+      hostname: "{{ ansible_hostname }}" # default
+      host_network: "{{ ansible_default_ipv4.address }}" # default
+      memory_java: -Xmx500m -Xms500m # default
