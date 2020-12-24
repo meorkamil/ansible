@@ -4,9 +4,5 @@ packages:
   - name: elasticsearch
     state: latest
 
-
 service:
   - name: elasticsearch
-
-ports:
-  - num: 9200/tcp
