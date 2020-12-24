@@ -1,2 +1,15 @@
 ---
 # tasks file for kibana
+- name: Add vars
+  include_vars: main.yml
+
+- name: Add kibana-repo
+  template:
+    src: templates/kibana-repo.j2
+    dest: /etc/yum.repos.d/kibana-repo.repo
+    
+- name: Install kibana
+  dnf:
+    name: "{{ item.name }}"
+    state: "{{ item.state }}"
+  loop: "{{ packages }}"
