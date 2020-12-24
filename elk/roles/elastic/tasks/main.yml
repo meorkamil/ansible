@@ -19,7 +19,7 @@
 
 - name: Allow firewalld
   firewalld:
-    port: "{{ ports_number }}"
+    port: "{{ ports_elastic_firewall }}"
     state: enabled
     permanent: yes
     immediate: yes
