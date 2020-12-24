@@ -1,2 +1,6 @@
 ---
 # defaults file for kibana
+elastic_host: "{{ ansible_default_ipv4.address }}:9200"
+kibana_host: localhost
+kibana_port: 5601
+kibana_port_firewall: 5601/tcp

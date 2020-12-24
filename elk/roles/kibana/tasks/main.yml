@@ -7,9 +7,15 @@
   template:
     src: templates/kibana-repo.j2
     dest: /etc/yum.repos.d/kibana-repo.repo
-    
+
 - name: Install kibana
   dnf:
     name: "{{ item.name }}"
     state: "{{ item.state }}"
   loop: "{{ packages }}"
+
+- name: Start kibana
+  service:
+    name: "{{ item.name }}"
+    state: started
+    enabled: yes

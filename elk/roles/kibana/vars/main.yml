@@ -3,3 +3,6 @@
 packages:
   - name: kibana
     state: latest
+
+services:
+  - name: kibana
