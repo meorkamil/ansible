@@ -38,12 +38,12 @@
     src: templates/elastic-systemd.j2
     dest: /usr/lib/systemd/system/elasticsearch.service
 
-# - name: Allow firewalld
-#   firewalld:
-#     port: "{{ port_elastic_firewall }}"
-#     state: enabled
-#     permanent: yes
-#     immediate: yes
+- name: Allow firewalld
+  firewalld:
+    port: "{{ port_elastic_firewall }}"
+    state: enabled
+    permanent: yes
+    immediate: yes
 
 - name: Start service
   service:
