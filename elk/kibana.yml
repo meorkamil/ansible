@@ -4,7 +4,7 @@
   roles:
     - role: kibana
       elastic_host: "{{ ansible_default_ipv4.address }}:9200" # default
-      kibana_host: localhost # default
+      kibana_host: "{{ ansible_default_ipv4.address }}" # default
       kibana_port: 5601 # default
       kibana_port_firewall: 5601/tcp # default
 

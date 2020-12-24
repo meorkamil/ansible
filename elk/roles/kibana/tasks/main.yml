@@ -14,8 +14,14 @@
     state: "{{ item.state }}"
   loop: "{{ packages }}"
 
+- name: Add kibana elastic-config
+  template:
+    src: templates/kibana-config.j2
+    dest: /etc/kibana/kibana.yml
+
 - name: Start kibana
   service:
     name: "{{ item.name }}"
     state: started
     enabled: yes
+  loop: "{{ services }}"
