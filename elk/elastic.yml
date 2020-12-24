@@ -7,4 +7,4 @@
       port_elastic_firewall: 9200/tcp
       hostname: "{{ ansible_hostname }}"
       host_network: "{{ ansible_default_ipv4.address }}"
-      memory_java: -Xmx2g -Xms2g
+      memory_java: -Xmx500m -Xms500m
