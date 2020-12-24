@@ -1,7 +1,7 @@
 Role Name
 =========
 
-A elasticsearch ansible roles.
+A Kibana ansible roles.
 
 Example Playbook
 ----------------
