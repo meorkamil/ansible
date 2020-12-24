@@ -19,6 +19,13 @@
     src: templates/kibana-config.j2
     dest: /etc/kibana/kibana.yml
 
+- name: Allow firewalld
+  firewalld:
+    port: "{{ kibana_port_firewall }}"
+    state: enabled
+    permanent: yes
+    immediate: yes
+
 - name: Start kibana
   service:
     name: "{{ item.name }}"
