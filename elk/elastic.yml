@@ -3,3 +3,7 @@
   hosts: elastic
   roles:
     - role: elastic
+      port_elastic: 9200
+      port_elastic_firewall: 9200/tcp
+      hostname: "{{ ansible_hostname }}"
+      host_network: "{{ ansible_default_ipv4.address }}"
