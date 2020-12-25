@@ -1,0 +1,10 @@
+---
+# vars file for minikube
+packages:
+  - name: docker-ce
+    state: latest
+  - name: kubectl
+    state: latest
+
+services:
+  - name: docker

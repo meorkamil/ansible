@@ -1,0 +1,38 @@
+---
+# tasks file for minikube
+- name: Add vars
+  include_vars: main.yml
+
+- name: Add docker repo
+  template:
+    src: templates/docker-repo.j2
+    dest: /etc/yum.repos.d/docker-repo.repo
+
+- name: Add kubernetes repo
+  template:
+    src: templates/kubernetes-repo.repo.j2
+    dest: /etc/yum.repos.d/kubernetes-repo.repo
+  
+- name: Install docker-ce and kubectl
+  dnf:
+    name: "{{ item.name }}"
+    state: "{{ item.state }}"
+  loop: "{{ packages }}"
+
+- name: Start docker
+  service:
+    name: "{{ item.name }}"
+    state: started
+    enabled: yes
+  loop: "{{ services }}"
+
+- name: Download minikube
+  raw: curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 && chmod +x minikube
+
+- name: Make /usr/local/bin
+  file:
+    state: directory
+    path: /usr/local/bin
+
+- name: Install minikube
+  raw: install minikube /usr/local/bin/
