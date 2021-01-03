@@ -1,20 +1,5 @@
-# - name: Install all docker packages 
-#   yum:
-#     name: "{{ item.name }}"
-#     state: "{{ item.state }}"
-#   loop: "{{ docker_package }}"
-
-# - name: start docker service  
-#   service:
-#     name: docker
-#     state: started
-#     enabled: yes
-
-- name: Install Conatinerd
-  dnf:
-    name: containerd.io
-    state: latest
-    allowerasing: yes
+- name: Install containerd
+  command: dnf install containerd.io --allowerasing
 
 - name: Install all Kubernetes packages
   yum:
@@ -30,6 +15,11 @@
 
 - name: Containerd setup
   raw: containerd config default > /etc/containerd/config.toml
+
+- name: crictl config
+  template:
+    src: templates/crictl-config.j2
+    dest: /etc/crictl.yaml
 
 - name: Start containerd and kubelet
   service:
