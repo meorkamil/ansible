@@ -1,0 +1,16 @@
+[docker-node]
+192.168.128.50 
+
+[kube-master]
+192.168.128.53
+
+[kube-worker1]
+192.168.128.51
+
+[kube-worker2]
+192.168.128.52
+
+[kube-node:children]
+kube-master
+kube-worker1
+kube-worker2

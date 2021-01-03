@@ -1,0 +1,25 @@
+---
+# tasks file for helm-setup
+- name: download from binary
+  get_url:
+    url: 'https://get.helm.sh/helm-{{ version }}-linux-amd64.tar.gz'
+    dest: /home
+
+- name: Unarchive helm binary
+  unarchive:
+    src: /home/helm-{{ version }}-linux-amd64.tar.gz
+    dest: /home/
+
+- name: Install helm
+  copy:
+    src: /home/linux-amd64/helm
+    dest: /usr/local/bin
+    remote_src: yes
+
+- name: Clean up
+  file:
+    state: absent
+    path: "{{ item }}"
+  loop:
+    - /home/helm-{{ version }}-linux-amd64.tar.gz
+    - /home/linux-amd64

@@ -1,0 +1,5 @@
+---
+# defaults file for build-docker-image
+docker_file: 
+  - file_name: centos
+    image_name: myimage

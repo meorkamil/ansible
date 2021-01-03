@@ -1,0 +1,30 @@
+---
+- name: Building Docker image
+  hosts:  all
+  pre_tasks:
+    - name: Create directory
+      file:
+        state: directory
+        path: ~/ansible-build-image/{{ item }}
+      loop:
+       - dockerfile  
+       - export
+  roles:
+    # This for building image from docker
+    # - role: build-docker-image
+    #   docker_file: 
+    #     - file_name: flask
+    #       image_name: flask:kube
+    #   when: "'docker-node' in group_names"
+    
+    # This for extract docker images
+    - role: export-docker-image
+      docker_file: 
+        - image_name: flask
+          file_name: flask-demo
+          tag: demo
+
+    # This for import docker to containerd
+    - role: docker-containerd
+      images:
+      - name: flask-demo.tar

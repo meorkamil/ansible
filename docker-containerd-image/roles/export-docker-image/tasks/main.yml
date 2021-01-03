@@ -1,0 +1,26 @@
+---
+# tasks file for export-docker-image
+- name: Archive image
+  docker_image:
+    name: "{{ item.image_name }}"
+    tag: "{{ item.tag }}"
+    archive_path: ~/ansible-build-image/export/{{ item.file_name }}.tar
+    source: local
+  loop: "{{ docker_file }}"
+  when: "'docker-node' in group_names"
+
+- name: Specifying a destination path
+  fetch:
+    src: ~/ansible-build-image/export/{{ item.file_name }}.tar
+    dest: /tmp/
+    flat: yes
+    validate_checksum: no
+  when: "'docker-node' in group_names"
+  loop: "{{ docker_file }}"
+
+- name: Copy to kube-node
+  copy:
+    src: /tmp/{{ item.file_name }}.tar
+    dest: ~/ansible-build-image/export/
+  when: "'kube-node' in group_names"
+  loop: "{{ docker_file }}"

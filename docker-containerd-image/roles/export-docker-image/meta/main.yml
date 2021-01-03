@@ -1,0 +1,5 @@
+galaxy_info:
+  author: alogjo (Meor Muhammad Kamil)
+  description: Extact the images from Docker Node to Kubernetes Cluster Nodes
+
+  min_ansible_version: 2.9

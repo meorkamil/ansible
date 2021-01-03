@@ -1,0 +1,6 @@
+---
+- name: Helm kubernetes package manager setup 
+  hosts: localhost
+  roles:
+    - role: helm-setup
+      version: v3.4.2 # default version

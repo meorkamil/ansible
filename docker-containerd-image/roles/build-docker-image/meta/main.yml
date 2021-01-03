@@ -1,0 +1,5 @@
+galaxy_info:
+  author: alogjo (Meor Muhammad Kamil)
+  description: Builidng docker images
+
+  min_ansible_version: 2.9

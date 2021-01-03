@@ -1,0 +1,6 @@
+---
+# defaults file for export-docker-image
+docker_file:
+  - image_name: centos
+    file_name: default
+    tag: v1

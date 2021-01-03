@@ -1,0 +1,24 @@
+---
+# tasks file for build-docker-image
+- name: Docker file directory
+  file:
+    state: directory
+    path: ~/ansible-build-image/dockerfile/{{ item.file_name }}
+  loop: "{{ docker_file }}"
+  when: "'docker-node' in group_names"
+
+- name: Copy docker file
+  copy:
+    src: "{{ item.file_name }}"
+    dest: ~/ansible-build-image/dockerfile/{{ item.file_name }}/Dockerfile
+  loop: "{{ docker_file }}"
+  when: "'docker-node' in group_names"
+
+- name: build image
+  docker_image:
+    name: "{{ item.image_name }}"
+    build:
+      path: ~/ansible-build-image/dockerfile/{{ item.file_name }}
+    source: build
+  loop: "{{ docker_file }}"
+  when: "'docker-node' in group_names"

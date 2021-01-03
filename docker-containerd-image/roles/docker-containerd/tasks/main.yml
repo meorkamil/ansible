@@ -1,0 +1,7 @@
+---
+# tasks file for docker-containerd
+- name: Importing Images
+  command: ctr -n k8s.io image import {{ item.name }}
+  loop: "{{ images }}"
+  when: "'kube-node' in group_names"
+

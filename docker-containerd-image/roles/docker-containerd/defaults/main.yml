@@ -1,0 +1,4 @@
+---
+# defaults file for docker-containerd
+images:
+  - name: flask.tar
