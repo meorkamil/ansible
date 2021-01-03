@@ -5,6 +5,8 @@ Just Playing around with ansible while i have more time to spend on the earth
 Available Solution in this repos:
 - Common Modules
 - Kubernetes
+- Helm Kubernetes
+- Minikube
 
 ## Editor
-[MK (Meor Muhammad Kamil)](https://www.linkedin.com/in/mk97/)
+[Algojo (Meor Muhammad Kamil)](https://www.linkedin.com/in/mk97/)
