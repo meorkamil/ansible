@@ -1,0 +1,9 @@
+---
+- name: Ansible Git Starting
+  hosts: localhost
+  roles:
+    - role: git-push
+      repo_dir: /home/sysadmin/Documents/github/ansible/ansible-git
+      remote_repo: origin # Your remote repo in local git
+      local_branch: main # Your local branch
+      commit: test # What your commit ?

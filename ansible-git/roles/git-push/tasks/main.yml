@@ -1,0 +1,16 @@
+---
+# tasks file for git
+- name: Git Add .
+  shell: git add .
+  args:
+    chdir: "{{ repo_dir }}"
+
+- name: Git Commit
+  shell: git commit -m "{{ commit }}"
+  args:
+    chdir: "{{ repo_dir }}"
+
+- name: Git push
+  shell: git push -u {{ remote_repo }} {{ local_branch }}
+  args:
+   chdir: "{{ repo_dir }}"
